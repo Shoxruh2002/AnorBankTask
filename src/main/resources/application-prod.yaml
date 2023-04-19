@@ -1,0 +1,44 @@
+server:
+  port: ${APP_PORT:4545}
+spring:
+  codec:
+    max-in-memory-size: 16000KB
+  application:
+    name: ${APP_NAME:TASNIFLAGICH_SERVICE}
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  datasource:
+    hikari:
+      connection-timeout: 60000
+      maximum-pool-size: 20
+    username: postgres
+    password: 1234
+    url: jdbc:postgresql://localhost:5432/dxmapdb
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+    groups-order: asc
+    operations-sorter: alpha
+    try-it-out-enabled: true
+    tags-sorter: alpha
+    display-request-duration: true
+  api-docs:
+    path: /api/doc
+
+api:
+  info:
+    title: Davlat Xaridlari Markaziy Axborot Portali
+    description: Davlat Xaridlari Markaziy Axborot Portali proyektidagi API lar
+    version: 1.2
+    contact-name: Viktor Dimkov
+    contact-email: vd30003vd@mail.ru
+    contact-url: https://t.me/Cor_habe
+    license-name: https://xarid.mf.uz
+    license-url: https://xarid.mf.uz
