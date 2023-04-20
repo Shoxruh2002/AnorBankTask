@@ -21,6 +21,11 @@ public interface AuthUserService {
             @JsonRpcParam(value = "request") AuthUserCreateDTO createDTO
     );
 
+    @JsonRpcMethod(value = "user.get.by.id")
+    AuthUserDTO userGetByIdRequest(
+            @JsonRpcParam(value = "id") Long id
+    );
+
     @JsonRpcMethod("user.get.all")
     List<AuthUserDTO> userGetAllRequest();
 }

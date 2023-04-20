@@ -1,18 +1,11 @@
 package uz.sh.service.impl;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
-import org.mapstruct.Qualifier;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.sh.dto.auth.AuthUserCreateDTO;
 import uz.sh.dto.auth.AuthUserDTO;
 import uz.sh.dto.auth.AuthUserUpdateDTO;
 import uz.sh.entity.AuthUser;
-import uz.sh.enums.Role;
 import uz.sh.exceptions.NotFoundException;
 import uz.sh.mapper.AuthUserMapper;
 import uz.sh.repository.AuthUserRepository;
@@ -30,7 +23,7 @@ import java.util.Optional;
 @AutoJsonRpcServiceImpl
 @Service
 public class AuthUserServiceImpl extends AbstractService<AuthUserRepository, AuthUserMapper> implements AuthUserService,
-        GenericService<AuthUserCreateDTO, AuthUserUpdateDTO, AuthUserDTO, Long>{
+        GenericService<AuthUserCreateDTO, AuthUserUpdateDTO, AuthUserDTO, Long> {
 
     public AuthUserServiceImpl(AuthUserRepository repository, AuthUserMapper mapper) {
         super(repository, mapper);
@@ -40,6 +33,11 @@ public class AuthUserServiceImpl extends AbstractService<AuthUserRepository, Aut
     @Override
     public Long userCreateRequest(AuthUserCreateDTO createDTO) {
         return this.create(createDTO);
+    }
+
+    @Override
+    public AuthUserDTO userGetByIdRequest(Long id) {
+        return this.getById(id);
     }
 
     @Override
@@ -70,7 +68,7 @@ public class AuthUserServiceImpl extends AbstractService<AuthUserRepository, Aut
         Optional<AuthUser> authUserOptional = repository.findById(id);
         if (authUserOptional.isPresent())
             return mapper.toDTO(authUserOptional.get());
-        throw new NotFoundException("Auth User not found with id : " + id);
+        throw new NotFoundException(400, "Auth User not found with id : " + id);
     }
 
 }

@@ -21,17 +21,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class AuthUserCreateDTO implements BaseDTO {
 
-    @NotNull
-    @Size(min = 6, max = 50)
-    private String username;
-
-    @NotNull
-    @Size(min = 6, max = 15)
-    private String password;
-
-    @NotNull
-    private Role role;
-
     @Size(max = 100)
     private String fullName;
 

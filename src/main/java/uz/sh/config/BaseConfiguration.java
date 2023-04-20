@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.googlecode.jsonrpc4j.ErrorResolver;
+import com.googlecode.jsonrpc4j.JsonRpcClientException;
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImplExporter;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -22,11 +22,11 @@ public class BaseConfiguration {
         AutoJsonRpcServiceImplExporter exp = new AutoJsonRpcServiceImplExporter();
         exp.setContentType(MediaType.APPLICATION_JSON_VALUE);
         exp.setErrorResolver(((throwable, method, list) -> {
-            ErrorMessage error;
+            JsonRpcClientException error;
             try {
-                error = (ErrorMessage) throwable;
+                error = (JsonRpcClientException) throwable;
             } catch (Throwable throwable1) {
-                error = new ErrorMessage(-32603, "Internal error");
+                error = new JsonRpcClientException(-32603, "Internal error", null);
             }
             return new ErrorResolver.JsonError(error.getCode(), error.getMessage(), error.getData());
         }));

@@ -20,15 +20,6 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 public class AuthUser extends Auditable {
 
-    @Column(unique = true, nullable = false, length = 50)
-    private String username;
-
-    @Column(nullable = false, length = 100)
-    private String password;
-
-    @Column(nullable = false)
-    private Role role;
-
     @Column(length = 100)
     private String fullName;
 

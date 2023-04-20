@@ -17,10 +17,6 @@ import uz.sh.enums.Role;
 @NoArgsConstructor
 public class AuthUserDTO extends GenericDTO {
 
-    private String username;
-
-    private Role role;
-
     private String fullName;
 
     private String phoneNumber;

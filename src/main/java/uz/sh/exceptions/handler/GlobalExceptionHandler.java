@@ -23,7 +23,7 @@
 //@Slf4j
 //@RestController
 //@ControllerAdvice
-//public class GlobalExceptionHandler extends JsonRpcClientErrorHandler {
+//public class GlobalExceptionHandler extends  {
 //
 //
 //    @Override

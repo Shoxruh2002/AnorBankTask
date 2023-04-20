@@ -21,13 +21,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class AuthUserUpdateDTO extends GenericDTO {
 
-    @NotNull
-    @Size(min = 6, max = 50)
-    private String username;
-
-    @NotNull
-    private Role role;
-
     @Size(max = 100)
     private String fullName;
 

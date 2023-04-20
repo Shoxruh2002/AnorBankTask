@@ -9,6 +9,4 @@ import java.util.Optional;
  * Time: 4/20/23 9:28 AM
  **/
 public interface AuthUserRepository extends BaseRepository<AuthUser> {
-
-    Optional<AuthUser> findAuthUserByUsername(String username);
 }
