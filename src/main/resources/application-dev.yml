@@ -1,8 +1,8 @@
 server:
-  port: ${APP_PORT:4545}
+  port: ${APP_PORT:7777}
 spring:
   application:
-    name: ${APP_NAME:TASNIFLAGICH_SERVICE}
+    name: ${APP_NAME:ANOR_BANK_TASK}
   servlet:
     multipart:
       max-file-size: 10MB
@@ -10,7 +10,7 @@ spring:
   datasource:
     username: postgres
     password: Shoxruh0912
-    url: jdbc:postgresql://localhost:5432/xarid_mf_uz
+    url: jdbc:postgresql://localhost:5432/anor_bank
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -19,27 +19,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-springdoc:
-  swagger-ui:
-    path: /swagger-ui
-    groups-order: asc
-    operations-sorter: alpha
-    try-it-out-enabled: true
-    tags-sorter: alpha
-    display-request-duration: true
-  api-docs:
-    path: /api/doc
 
-
-api:
-  info:
-    title: Davlat Xaridlari Markaziy Axborot Portali
-    description: Davlat Xaridlari Markaziy Axborot Portali proyektidagi API lar
-    version: 1.2
-    contact-name: Viktor Dimkov
-    contact-email: theshd.0912@gmail.com
-    contact-url: https://t.me/Cor_habe
-    license-name: https://xarid.mf.uz
-    license-url: https://xarid.mf.uz
 
 

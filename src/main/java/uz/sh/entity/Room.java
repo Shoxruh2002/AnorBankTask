@@ -1,8 +1,32 @@
 package uz.sh.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
 /**
  * Author: Shoxruh Bekpulatov
  * Time: 4/19/23 5:33 PM
  **/
-public class Room {
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Room extends Auditable {
+
+    @Column(length = 50)
+    private String roomName;
+
+    @Column(length = 15)
+    private String roomNumber;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Floor floor;
 }
