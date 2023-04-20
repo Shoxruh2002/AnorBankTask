@@ -39,8 +39,6 @@ public abstract class Auditable implements BaseEntity, Serializable {
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
     private Date createdAt = new Date();
 
-//    private Long createdBy;
-
     @JsonIgnore
     @Version
     private Integer version;

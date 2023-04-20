@@ -17,6 +17,13 @@ import org.springframework.http.MediaType;
 @Configuration
 public class BaseConfiguration {
 
+
+    /**
+     * handles exceptions which are extent from {@link JsonRpcClientException}  in application
+     * and defines http response code according to exception code
+     *
+     * @return {@link AutoJsonRpcServiceImplExporter}
+     */
     @Bean
     public AutoJsonRpcServiceImplExporter autoJsonRpcServiceImplExporter() {
         AutoJsonRpcServiceImplExporter exp = new AutoJsonRpcServiceImplExporter();

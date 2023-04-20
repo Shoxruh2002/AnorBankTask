@@ -1,6 +1,7 @@
 package uz.sh.exceptions;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.googlecode.jsonrpc4j.JsonRpcClientException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -17,5 +18,9 @@ public class BadRequestException extends JsonRpcClientException {
      */
     public BadRequestException(int code, String message, JsonNode data) {
         super(code, message, data);
+    }
+
+    public BadRequestException(int code, String message) {
+        super(code, message, JsonNodeFactory.instance.nullNode());
     }
 }

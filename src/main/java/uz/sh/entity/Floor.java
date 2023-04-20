@@ -26,6 +26,5 @@ public class Floor extends Auditable {
     private boolean isDown;
 
     @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "building_id", referencedColumnName = "id")
     private Building building;
 }

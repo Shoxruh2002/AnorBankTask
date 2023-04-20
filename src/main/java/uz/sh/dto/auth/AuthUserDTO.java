@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.sh.dto.GenericDTO;
-import uz.sh.enums.Role;
 
 /**
  * Author: Shoxruh Bekpulatov

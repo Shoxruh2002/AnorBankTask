@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  * Author: Shoxruh Bekpulatov
@@ -23,8 +24,10 @@ public class Complex extends Auditable {
     private String complexName;
 
     @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "building_id", referencedColumnName = "id")
-    private Building building;
+    private Room building;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private AuthUser authUser;
 
     private Long userId;
 

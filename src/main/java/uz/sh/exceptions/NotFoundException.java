@@ -22,6 +22,4 @@ public class NotFoundException extends JsonRpcClientException {
     public NotFoundException(int code, String message) {
         super(code, message, JsonNodeFactory.instance.nullNode());
     }
-
-
 }
