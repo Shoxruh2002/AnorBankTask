@@ -5,8 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 /**
  * Author: Shoxruh Bekpulatov
@@ -29,5 +31,8 @@ public class AuthUser extends Auditable {
     private String position;
 
     private Integer age;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Organization organization;
 
 }

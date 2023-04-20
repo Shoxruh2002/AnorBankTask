@@ -30,4 +30,6 @@ public class AuthUserCreateDTO implements BaseDTO {
 
     @Positive
     private Integer age;
+
+    private Long organizationId;
 }

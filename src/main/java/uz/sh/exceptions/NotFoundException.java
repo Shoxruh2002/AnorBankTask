@@ -6,7 +6,6 @@ import com.googlecode.jsonrpc4j.JsonRpcClientException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class NotFoundException extends JsonRpcClientException {
     /**
      * Creates the exception.
@@ -21,5 +20,9 @@ public class NotFoundException extends JsonRpcClientException {
 
     public NotFoundException(int code, String message) {
         super(code, message, JsonNodeFactory.instance.nullNode());
+    }
+
+    public NotFoundException(String message) {
+        super(404, message, JsonNodeFactory.instance.nullNode());
     }
 }

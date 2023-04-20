@@ -23,4 +23,8 @@ public class BadRequestException extends JsonRpcClientException {
     public BadRequestException(int code, String message) {
         super(code, message, JsonNodeFactory.instance.nullNode());
     }
+
+    public BadRequestException(String message) {
+        super(400, message, JsonNodeFactory.instance.nullNode());
+    }
 }

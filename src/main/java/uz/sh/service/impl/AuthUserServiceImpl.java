@@ -22,27 +22,30 @@ import java.util.Optional;
 @Service
 public class AuthUserServiceImpl extends AbstractService<AuthUserRepository, AuthUserMapper> implements AuthUserService {
 
-    public AuthUserServiceImpl(AuthUserRepository repository, AuthUserMapper mapper) {
+    private final OrganizationServiceImpl organizationService;
+
+    public AuthUserServiceImpl(AuthUserRepository repository, AuthUserMapper mapper, OrganizationServiceImpl organizationService) {
         super(repository, mapper);
+        this.organizationService = organizationService;
     }
 
     @Override
-    public Long userCreateRequest(AuthUserCreateDTO createDTO) {
+    public Long userCreate(AuthUserCreateDTO createDTO) {
         AuthUser authUser = mapper.fromCreateDTO(createDTO);
         AuthUser saved = repository.save(authUser);
         return saved.getId();
     }
 
     @Override
-    public AuthUserDTO userGetByIdRequest(Long id) {
+    public AuthUserDTO userGetById(Long id) {
         Optional<AuthUser> authUserOptional = repository.findById(id);
         if (authUserOptional.isPresent())
             return mapper.toDTO(authUserOptional.get());
-        throw new NotFoundException(400, "Auth User not found with id : " + id);
+        throw new NotFoundException(404, "Auth User not found with id : " + id);
     }
 
     @Override
-    public List<AuthUserDTO> userGetAllRequest() {
+    public List<AuthUserDTO> userGetAll() {
         List<AuthUser> userList = repository.findAll();
         return mapper.toDTO(userList);
     }

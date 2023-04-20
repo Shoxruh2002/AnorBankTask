@@ -1,27 +1,25 @@
-package uz.sh.entity;
+package uz.sh.dto.building;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.sh.dto.GenericDTO;
+import uz.sh.dto.floor.FloorDTO;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import java.util.List;
 
 /**
  * Author: Shoxruh Bekpulatov
- * Time: 4/19/23 5:33 PM
+ * Time: 4/20/23 5:12 PM
  **/
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Organization extends Auditable {
+public class BuildingDetailDTO extends GenericDTO {
 
-    @Column(length = 50)
     private String name;
 
-    private String address;
-
+    private List<FloorDTO> floors;
 }
