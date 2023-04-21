@@ -13,6 +13,10 @@ import java.util.List;
  * Author: Shoxruh Bekpulatov
  * Time: 4/19/23 5:33 PM
  **/
+
+/**
+ * Class is that floor of building
+ */
 @Entity
 @Getter
 @Setter

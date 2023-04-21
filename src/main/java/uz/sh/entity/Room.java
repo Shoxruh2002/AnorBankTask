@@ -13,6 +13,10 @@ import java.util.List;
  * Author: Shoxruh Bekpulatov
  * Time: 4/19/23 5:33 PM
  **/
+
+/**
+ * Room class, workers and equipments are located
+ */
 @Entity
 @Getter
 @Setter

@@ -18,30 +18,30 @@ import java.util.List;
 public interface RoomService {
 
     @JsonRpcMethod(value = "room.create")
-    Long roomCreate(
+    Long createRoom(
             @JsonRpcParam(value = "body") RoomCreateDTO createDTO
     );
 
     @JsonRpcMethod(value = "room.get.by.id")
-    RoomDTO roomGetById(
+    RoomDTO getRoomDTOById(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod(value = "room.get.detail.by.id")
-    RoomDetailDTO roomDetailGetById(
+    RoomDetailDTO getRoomDetailById(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod("room.get.all")
-    List<RoomDTO> roomGetAll();
+    List<RoomDTO> getAllRoomDTO();
 
     @JsonRpcMethod("room.delete")
-    Long roomDelete(
+    Long deleteRoom(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod("room.update")
-    Long roomUpdate(
+    Long updateRoom(
             @JsonRpcParam(value = "body") RoomUpdateDTO updateDTO
     );
 

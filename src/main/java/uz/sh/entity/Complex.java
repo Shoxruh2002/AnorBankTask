@@ -13,6 +13,12 @@ import java.util.List;
  * Author: Shoxruh Bekpulatov
  * Time: 4/19/23 5:34 PM
  **/
+
+
+/**
+ *
+ * Complex is a complex of items and other equipments
+ */
 @Entity
 @Getter
 @Setter

@@ -17,30 +17,30 @@ import java.util.List;
 public interface BuildingService {
 
     @JsonRpcMethod(value = "building.create")
-    Long buildingCreate(
+    Long createBuilding(
             @JsonRpcParam(value = "body") BuildingCreateDTO createDTO
     );
 
     @JsonRpcMethod(value = "building.get.by.id")
-    BuildingDTO buildingDTOGetById(
+    BuildingDTO getBuildingDTOById(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod(value = "building.get.detail.by.id")
-    BuildingDetailDTO buildingDetailDTOGetById(
+    BuildingDetailDTO getBuildingDetailById(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod("building.get.all")
-    List<BuildingDTO> buildingGetAll();
+    List<BuildingDTO> getAllBuilding();
 
     @JsonRpcMethod("building.delete")
-    Long buildingDelete(
+    Long deleteBuilding(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod("building.update")
-    Long buildingUpdate(
+    Long updateBuilding(
             @JsonRpcParam(value = "body") BuildingDTO updateDTO
     );
 }

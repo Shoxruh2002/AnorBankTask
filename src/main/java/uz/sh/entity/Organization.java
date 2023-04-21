@@ -16,6 +16,10 @@ import java.util.List;
  * Author: Shoxruh Bekpulatov
  * Time: 4/19/23 5:33 PM
  **/
+
+/**
+ * Organization is head of all buildings
+ */
 @Entity
 @Getter
 @Setter

@@ -14,6 +14,12 @@ import javax.persistence.ManyToOne;
  * Author: Shoxruh Bekpulatov
  * Time: 4/19/23 5:34 PM
  **/
+
+/**
+ * AuthUser class
+ * users who  workes at organizations
+ * and can be owner of complexes
+ */
 @Entity
 @Getter
 @Setter

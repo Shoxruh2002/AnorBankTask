@@ -17,21 +17,21 @@ import java.util.List;
 public interface AuthUserService {
 
     @JsonRpcMethod(value = "user.create")
-    Long userCreate(
+    Long createAuthUser(
             @JsonRpcParam(value = "body") AuthUserCreateDTO createDTO
     );
 
     @JsonRpcMethod(value = "user.get.by.id")
-    AuthUserDTO userGetById(
+    AuthUserDTO getUserDTOById(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod(value = "user.get.detail.by.id")
-    AuthUserDetailDTO userDetailGetById(
+    AuthUserDetailDTO getUserDetailById(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod("user.get.all")
-    List<AuthUserDTO> userGetAll();
+    List<AuthUserDTO> getAllUser();
 
 }

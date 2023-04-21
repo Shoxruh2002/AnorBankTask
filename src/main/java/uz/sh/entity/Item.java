@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
@@ -15,6 +14,10 @@ import java.math.BigDecimal;
  * Author: Shoxruh Bekpulatov
  * Time: 4/19/23 5:33 PM
  **/
+
+/**
+ * Item class is that equipments are for workers
+ */
 @Entity
 @Getter
 @Setter

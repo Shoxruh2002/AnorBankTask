@@ -1,17 +1,17 @@
 package uz.sh.service.impl;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import uz.sh.contraints.ConstMessages;
 import uz.sh.dto.complex.ComplexDTO;
 import uz.sh.dto.item.ItemDTO;
-import uz.sh.dto.item.ItemDetailDTO;
 import uz.sh.dto.room.RoomCreateDTO;
 import uz.sh.dto.room.RoomDTO;
 import uz.sh.dto.room.RoomDetailDTO;
 import uz.sh.dto.room.RoomUpdateDTO;
 import uz.sh.entity.Floor;
 import uz.sh.entity.Room;
-import uz.sh.exceptions.BadRequestException;
 import uz.sh.exceptions.NotFoundException;
 import uz.sh.mapper.RoomMapper;
 import uz.sh.repository.RoomRepository;
@@ -33,15 +33,22 @@ public class RoomServiceImpl extends AbstractService<RoomRepository, RoomMapper>
     private final ItemServiceImpl itemService;
     private final ComplexServiceImpl complexService;
 
-    public RoomServiceImpl(RoomRepository repository, RoomMapper mapper, FloorServiceImpl floorService, ItemServiceImpl itemService, ComplexServiceImpl complexService) {
+    public RoomServiceImpl(RoomRepository repository, @Qualifier("roomMapperImpl") RoomMapper mapper, FloorServiceImpl floorService, ItemServiceImpl itemService, ComplexServiceImpl complexService) {
         super(repository, mapper);
         this.floorService = floorService;
         this.itemService = itemService;
         this.complexService = complexService;
     }
 
+    /**
+     * Creates new Room
+     *
+     * @param createDTO -> dto from comes from FrontEnd for creating new Room
+     * @return id of new created Room
+     */
+
     @Override
-    public Long roomCreate(RoomCreateDTO createDTO) {
+    public Long createRoom(RoomCreateDTO createDTO) {
         Room room = mapper.fromCreateDTO(createDTO);
         Floor floor = floorService.getFloorById(createDTO.getFloorId());
         room.setFloor(floor);
@@ -49,25 +56,32 @@ public class RoomServiceImpl extends AbstractService<RoomRepository, RoomMapper>
         return saved.getId();
     }
 
+    /**
+     * @param id -> id of Room
+     * @return short Info of Room
+     */
+
     public Room getRoomById(Long id) {
         Optional<Room> roomOptional = repository.findById(id);
         if (roomOptional.isPresent())
             return roomOptional.get();
-        throw new NotFoundException("Room not found with id " + id);
+        throw new NotFoundException(ConstMessages.ROOM_NOT_FOUND.formatted(id));
     }
 
     @Override
-    public RoomDTO roomGetById(Long id) {
+    public RoomDTO getRoomDTOById(Long id) {
         Room room = this.getRoomById(id);
         return mapper.toDTO(room);
     }
 
+    /**
+     * @param id -> id of Room
+     * @return Full Info of Room with all items and complexes
+     */
+
     @Override
-    public RoomDetailDTO roomDetailGetById(Long id) {
-        Optional<Room> optionalRoom = repository.findById(id);
-        if (optionalRoom.isEmpty())
-            throw new NotFoundException("Room Not found with id : " + id);
-        Room room = optionalRoom.get();
+    public RoomDetailDTO getRoomDetailById(Long id) {
+        Room room = this.getRoomById(id);
         RoomDetailDTO detailsDTO = mapper.toDetailsDTO(room);
         List<ItemDTO> items = itemService.getItemsByRoomId(id);
         List<ComplexDTO> complexDTOS = complexService.getByRoomId(id);
@@ -76,32 +90,47 @@ public class RoomServiceImpl extends AbstractService<RoomRepository, RoomMapper>
         return detailsDTO;
     }
 
+    /**
+     * @return all the rooms  in database
+     */
+
+
     @Override
-    public List<RoomDTO> roomGetAll() {
+    public List<RoomDTO> getAllRoomDTO() {
         List<Room> roomList = repository.findAll();
         return mapper.toDTO(roomList);
     }
 
-    @Override
-    public Long roomDelete(Long id) {
-        Optional<Room> optionalRoom = repository.findById(id);
-        if (optionalRoom.isEmpty())
-            throw new BadRequestException("Room Not found with id : " + id);
-        repository.delete(optionalRoom.get());
-        return optionalRoom.get().getId();
-    }
+    /**
+     * @param id the id of the Room to be deleted
+     * @return id of deleted Room
+     */
 
     @Override
-    public Long roomUpdate(RoomUpdateDTO updateDTO) {
+    public Long deleteRoom(Long id) {
+        Room dbRoom = this.getRoomById(id);
+        repository.delete(dbRoom);
+        return dbRoom.getId();
+    }
+
+    /**
+     * @param updateDTO dto to be updated
+     * @return id of updated Room
+     */
+
+    @Override
+    public Long updateRoom(RoomUpdateDTO updateDTO) {
         Long id = updateDTO.getId();
-        Optional<Room> optionalRoom = repository.findById(id);
-        if (optionalRoom.isEmpty())
-            throw new BadRequestException("Room Not found with id : " + id);
-        Room room = mapper.fromUpdateDTO(updateDTO, optionalRoom.get());
+        Room dbRoom = this.getRoomById(id);
+        Room room = mapper.fromUpdateDTO(updateDTO, dbRoom);
         repository.save(room);
         return id;
     }
 
+    /**
+     * @param floorId -> id of the floor
+     * @return all buildings of floor
+     */
     public List<RoomDTO> getAllRoomDTOsByFloorId(Long floorId) {
         List<Room> rooms = repository.findAllByFloor_Id(floorId);
         return mapper.toDTO(rooms);

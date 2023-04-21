@@ -17,30 +17,30 @@ import java.util.List;
 public interface FloorService {
 
     @JsonRpcMethod(value = "floor.create")
-    Long floorCreate(
+    Long createFloor(
             @JsonRpcParam(value = "body") FloorCreateDTO createDTO
     );
 
     @JsonRpcMethod(value = "floor.get.by.id")
-    FloorDTO floorGetById(
+    FloorDTO getFloorDTOById(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod(value = "floor.get.detail.by.id")
-    FloorDetailDTO floorDetailGetById(
+    FloorDetailDTO getFloorDetailById(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod("floor.get.all")
-    List<FloorDTO> floorGetAll();
+    List<FloorDTO> getAllFloor();
 
     @JsonRpcMethod("floor.delete")
-    Long floorDelete(
+    Long deleteFloor(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod("floor.update")
-    Long floorUpdate(
+    Long updateFloor(
             @JsonRpcParam(value = "body") FloorDTO updateDTO
     );
 

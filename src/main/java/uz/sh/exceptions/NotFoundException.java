@@ -3,9 +3,11 @@ package uz.sh.exceptions;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.googlecode.jsonrpc4j.JsonRpcClientException;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * NotFoundException will be thrown when
+ * the requested resource is not found
+ */
 public class NotFoundException extends JsonRpcClientException {
     /**
      * Creates the exception.

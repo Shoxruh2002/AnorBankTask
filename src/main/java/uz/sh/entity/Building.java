@@ -13,6 +13,11 @@ import java.util.List;
  * Author: Shoxruh Bekpulatov
  * Time: 4/19/23 5:33 PM
  **/
+
+
+/**
+ * Building class is buildings of Organizations
+ */
 @Entity
 @Getter
 @Setter

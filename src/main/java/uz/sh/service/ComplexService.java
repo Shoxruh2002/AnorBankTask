@@ -18,41 +18,41 @@ import java.util.List;
 public interface ComplexService {
 
     @JsonRpcMethod(value = "complex.create")
-    Long complexCreate(
+    Long createComplex(
             @JsonRpcParam(value = "body") ComplexCreateDTO createDTO
     );
 
     @JsonRpcMethod(value = "complex.get.by.id")
-    ComplexDTO complexGetById(
+    ComplexDTO getComplexDTOById(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod(value = "complex.get.detail.by.id")
-    ComplexDetailDTO complexDetailGetById(
+    ComplexDetailDTO getComplexDetailById(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod("complex.get.all")
-    List<ComplexDTO> complexGetAll();
+    List<ComplexDTO> getAllComplex();
 
     @JsonRpcMethod("complex.delete")
-    Long complexDelete(
+    Long deleteComplex(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod("complex.update")
-    Long complexUpdate(
+    Long updateComplex(
             @JsonRpcParam(value = "body") ComplexUpdateDTO updateDTO
     );
 
     @JsonRpcMethod("complex.bind.to.user")
-    Long complexBindToUser(
+    Long bindComplexToUser(
             @JsonRpcParam(value = "complexId") Long  complexId,
             @JsonRpcParam(value = "userId") Long  userId
     );
 
     @JsonRpcMethod("complex.unbind.to.user")
-    Long complexUnBindToUser(
+    Long unbindComplexToUser(
             @JsonRpcParam(value = "complexId") Long  complexId
     );
 

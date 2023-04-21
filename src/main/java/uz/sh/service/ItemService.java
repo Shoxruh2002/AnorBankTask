@@ -18,41 +18,41 @@ import java.util.List;
 public interface ItemService {
 
     @JsonRpcMethod(value = "item.create")
-    Long itemCreate(
+    Long createItem(
             @JsonRpcParam(value = "body") ItemCreateDTO createDTO
     );
 
     @JsonRpcMethod(value = "item.get.by.id")
-    ItemDTO itemGetById(
+    ItemDTO getItemDTOById(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod(value = "item.get.detail.by.id")
-    ItemDetailDTO itemGetDetailById(
+    ItemDetailDTO getItemDetailById(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod("item.get.all")
-    List<ItemDTO> itemGetAll();
+    List<ItemDTO> getAllItem();
 
     @JsonRpcMethod("item.delete")
-    Long itemDelete(
+    Long deleteItem(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod("item.update")
-    Long itemUpdate(
+    Long updateItem(
             @JsonRpcParam(value = "body") ItemUpdateDTO updateDTO
     );
 
     @JsonRpcMethod("item.bind.to.complex")
-    Long itemBindToComplex(
+    Long bindItemToComplex(
             @JsonRpcParam(value = "complexId") Long complexId,
             @JsonRpcParam(value = "itemId") Long itemId
     );
 
     @JsonRpcMethod("item.unbind.to.complex")
-    Long itemBindToComplex(
+    Long unbindItemToComplex(
             @JsonRpcParam(value = "itemId") Long itemId
     );
 

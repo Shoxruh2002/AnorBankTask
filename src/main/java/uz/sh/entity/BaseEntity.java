@@ -6,5 +6,9 @@ package uz.sh.entity;
  * Time: 09:52
  */
 
+/**
+ * Marker Interface for Entities
+ */
+
 public interface BaseEntity {
 }

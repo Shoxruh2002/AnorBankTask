@@ -11,8 +11,16 @@ import java.util.Map;
  * Author: Shoxruh Bekpulatov
  * Time: 11/3/22 5:03 PM
  **/
+
+/**
+ * Class that indicates and sets HttpResponse status
+ * code to response according to the JsonRPC protocol code
+ *
+ */
 public class CustomHttpStatusCodeProvider implements HttpStatusCodeProvider {
     final Map<Integer, ErrorResolver.JsonError> httpStatus2JsonError = new HashMap<>();
+
+
 
     CustomHttpStatusCodeProvider() {
         this.httpStatus2JsonError.put(500, ErrorResolver.JsonError.INTERNAL_ERROR);

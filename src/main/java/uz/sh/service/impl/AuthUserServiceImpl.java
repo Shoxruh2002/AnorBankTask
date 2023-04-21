@@ -1,7 +1,9 @@
 package uz.sh.service.impl;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import uz.sh.contraints.ConstMessages;
 import uz.sh.dto.auth.AuthUserCreateDTO;
 import uz.sh.dto.auth.AuthUserDTO;
 import uz.sh.dto.auth.AuthUserDetailDTO;
@@ -26,26 +28,42 @@ public class AuthUserServiceImpl extends AbstractService<AuthUserRepository, Aut
 
     private final ComplexServiceImpl complexService;
 
-    public AuthUserServiceImpl(AuthUserRepository repository, AuthUserMapper mapper, ComplexServiceImpl complexService) {
+    public AuthUserServiceImpl(AuthUserRepository repository, @Qualifier("authUserMapperImpl") AuthUserMapper mapper, ComplexServiceImpl complexService) {
         super(repository, mapper);
         this.complexService = complexService;
     }
 
+    /**
+     * Creates new AuthUser
+     *
+     * @param createDTO -> dto from comes from FrontEnd for creating new AuthUser
+     * @return id of new created AuthUser
+     */
     @Override
-    public Long userCreate(AuthUserCreateDTO createDTO) {
+    public Long createAuthUser(AuthUserCreateDTO createDTO) {
         AuthUser authUser = mapper.fromCreateDTO(createDTO);
         AuthUser saved = repository.save(authUser);
         return saved.getId();
     }
 
+    /**
+     * @param id -> id of AuthUser
+     * @return short Info of AuthUser
+     */
+
     @Override
-    public AuthUserDTO userGetById(Long id) {
+    public AuthUserDTO getUserDTOById(Long id) {
         AuthUser authUser = this.getAuthUserById(id);
         return mapper.toDTO(authUser);
     }
 
+    /**
+     * @param id -> id of AuthUser
+     * @return Full Info of AuthUser with all floors
+     */
+
     @Override
-    public AuthUserDetailDTO userDetailGetById(Long id) {
+    public AuthUserDetailDTO getUserDetailById(Long id) {
         AuthUser authUser = this.getAuthUserById(id);
         AuthUserDetailDTO detailDTO = mapper.toDetailDTO(authUser);
         List<ComplexDTO> complexDTOList = complexService.getByAuthUserId(id);
@@ -53,16 +71,27 @@ public class AuthUserServiceImpl extends AbstractService<AuthUserRepository, Aut
         return detailDTO;
     }
 
+    /**
+     * @return all the auth users  in database
+     */
+
     @Override
-    public List<AuthUserDTO> userGetAll() {
+    public List<AuthUserDTO> getAllUser() {
         List<AuthUser> userList = repository.findAll();
         return mapper.toDTO(userList);
     }
+
+    /**
+     * @param id -> id of AuthUser
+     * @return finds AuthUser from database and returns it if found
+     * @throws NotFoundException if not found AuthUser
+     */
+
 
     public AuthUser getAuthUserById(Long id) {
         Optional<AuthUser> authUserOptional = repository.findById(id);
         if (authUserOptional.isPresent())
             return authUserOptional.get();
-        throw new NotFoundException(404, "Auth User not found with id : " + id);
+        throw new NotFoundException(404, ConstMessages.AUTH_USER_NOT_FOUND.formatted(id));
     }
 }

@@ -17,30 +17,30 @@ import java.util.List;
 public interface OrganizationService {
 
     @JsonRpcMethod(value = "organization.create")
-    Long organizationCreate(
+    Long createOrganization(
             @JsonRpcParam(value = "body") OrganizationCreateDTO createDTO
     );
 
     @JsonRpcMethod(value = "organization.get.by.id")
-    OrganizationDTO organizationGetById(
+    OrganizationDTO getOrganizationDTOById(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod(value = "organization.get.detail.by.id")
-    OrganizationDetailDTO organizationDetailGetById(
+    OrganizationDetailDTO getOrganizationDetailById(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod("organization.get.all")
-    List<OrganizationDTO> organizationGetAll();
+    List<OrganizationDTO> getAllOrganization();
 
     @JsonRpcMethod("organization.delete")
-    Long organizationDelete(
+    Long deleteOrganization(
             @JsonRpcParam(value = "id") Long id
     );
 
     @JsonRpcMethod("organization.update")
-    Long organizationUpdate(
+    Long updateOrganization(
             @JsonRpcParam(value = "body") OrganizationDTO updateDTO
     );
 

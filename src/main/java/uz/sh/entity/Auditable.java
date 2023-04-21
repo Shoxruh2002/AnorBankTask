@@ -19,6 +19,11 @@ import java.util.Date;
  * Time: 09:52
  */
 
+/**
+ * Auditable class representing  the
+ * abstract fields of entities
+ */
+
 @Getter
 @Setter
 @MappedSuperclass
