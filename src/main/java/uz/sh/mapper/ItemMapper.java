@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import uz.sh.dto.item.ItemCreateDTO;
 import uz.sh.dto.item.ItemDTO;
 import uz.sh.dto.item.ItemDetailDTO;
+import uz.sh.dto.item.ItemUpdateDTO;
 import uz.sh.entity.Item;
 
 import java.util.List;
@@ -22,12 +23,11 @@ public interface ItemMapper extends BaseMapper {
 
     ItemDTO toDTO(Item items);
 
-    ItemDetailDTO toDetailsDTO(Item items);
+    ItemDetailDTO toDetailDTO(Item items);
 
     List<ItemDTO> toDTO(List<Item> items);
 
-    Item fromUpdateDTO(ItemDTO updateDTO, @MappingTarget Item item);
-
+    Item fromUpdateDTO(ItemUpdateDTO updateDTO, @MappingTarget Item item);
 
 
 }

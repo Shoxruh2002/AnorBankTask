@@ -1,11 +1,14 @@
 package uz.sh.service.impl;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import uz.sh.dto.item.ItemCreateDTO;
 import uz.sh.dto.item.ItemDTO;
 import uz.sh.dto.item.ItemDetailDTO;
+import uz.sh.dto.item.ItemUpdateDTO;
 import uz.sh.entity.Item;
+import uz.sh.entity.Room;
 import uz.sh.exceptions.BadRequestException;
 import uz.sh.exceptions.NotFoundException;
 import uz.sh.mapper.ItemMapper;
@@ -14,6 +17,7 @@ import uz.sh.service.AbstractService;
 import uz.sh.service.ItemService;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -24,16 +28,22 @@ import java.util.Optional;
 @Service
 public class ItemServiceImpl extends AbstractService<ItemRepository, ItemMapper> implements ItemService {
 
-    private final BuildingServiceImpl buildingService;
+    private final RoomServiceImpl roomServiceImpl;
+    private final ComplexServiceImpl complexService;
 
-    public ItemServiceImpl(ItemRepository repository, ItemMapper mapper, BuildingServiceImpl buildingService) {
+    public ItemServiceImpl(ItemRepository repository, ItemMapper mapper, @Lazy RoomServiceImpl roomServiceImpl, @Lazy ComplexServiceImpl complexService) {
         super(repository, mapper);
-        this.buildingService = buildingService;
+        this.roomServiceImpl = roomServiceImpl;
+        this.complexService = complexService;
     }
 
     @Override
     public Long itemCreate(ItemCreateDTO createDTO) {
         Item item = mapper.fromCreateDTO(createDTO);
+        Room room = roomServiceImpl.getRoomById(createDTO.getRoomId());
+        item.setRoom(room);
+        if (Objects.nonNull(createDTO.getComplexId()))
+            item.setComplex(complexService.getComplexById(createDTO.getComplexId()));
         Item saved = repository.save(item);
         return saved.getId();
     }
@@ -48,13 +58,13 @@ public class ItemServiceImpl extends AbstractService<ItemRepository, ItemMapper>
     }
 
     @Override
-    public ItemDetailDTO itemDetailGetById(Long id) {
+    public ItemDetailDTO itemGetDetailById(Long id) {
         Optional<Item> optionalItem = repository.findById(id);
         if (optionalItem.isEmpty())
             throw new NotFoundException("Item Not found with id : " + id);
         Item item = optionalItem.get();
-        ItemDetailDTO detailsDTO = mapper.toDetailsDTO(item);
-        return detailsDTO;
+        return mapper.toDetailDTO(item);
+
     }
 
     @Override
@@ -73,7 +83,7 @@ public class ItemServiceImpl extends AbstractService<ItemRepository, ItemMapper>
     }
 
     @Override
-    public Long itemUpdate(ItemDTO updateDTO) {
+    public Long itemUpdate(ItemUpdateDTO updateDTO) {
         Long id = updateDTO.getId();
         Optional<Item> optionalItem = repository.findById(id);
         if (optionalItem.isEmpty())
@@ -81,5 +91,30 @@ public class ItemServiceImpl extends AbstractService<ItemRepository, ItemMapper>
         Item item = mapper.fromUpdateDTO(updateDTO, optionalItem.get());
         repository.save(item);
         return id;
+    }
+
+    @Override
+    public Long itemBindToComplex(Long complexId, Long itemId) {
+        complexService.getComplexById(complexId);
+        this.itemGetById(itemId);
+        repository.itemBindToComplex(itemId, complexId);
+        return itemId;
+    }
+
+    @Override
+    public Long itemBindToComplex(Long itemId) {
+        this.itemGetById(itemId);
+        repository.itemBindToComplex(itemId, null);
+        return itemId;
+    }
+
+    public List<ItemDTO> getItemsByComplexId(Long id) {
+        List<Item> itemList = repository.findAllByComplex_Id(id);
+        return mapper.toDTO(itemList);
+    }
+
+    public List<ItemDTO> getItemsByRoomId(Long id) {
+        List<Item> itemList = repository.findAllByRoom_Id(id);
+        return mapper.toDTO(itemList);
     }
 }

@@ -1,20 +1,24 @@
 package uz.sh.service.impl;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import uz.sh.dto.complex.ComplexCreateDTO;
 import uz.sh.dto.complex.ComplexDTO;
 import uz.sh.dto.complex.ComplexDetailDTO;
+import uz.sh.dto.complex.ComplexUpdateDTO;
+import uz.sh.entity.AuthUser;
 import uz.sh.entity.Complex;
+import uz.sh.entity.Room;
 import uz.sh.exceptions.BadRequestException;
 import uz.sh.exceptions.NotFoundException;
 import uz.sh.mapper.ComplexMapper;
 import uz.sh.repository.ComplexRepository;
 import uz.sh.service.AbstractService;
 import uz.sh.service.ComplexService;
-import uz.sh.service.ComplexService;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -23,18 +27,28 @@ import java.util.Optional;
  **/
 @AutoJsonRpcServiceImpl
 @Service
-public class ComplexServiceImpl  extends AbstractService<ComplexRepository, ComplexMapper> implements ComplexService {
+public class ComplexServiceImpl extends AbstractService<ComplexRepository, ComplexMapper> implements ComplexService {
 
-    private final BuildingServiceImpl buildingService;
+    private final ItemServiceImpl itemService;
+    private final RoomServiceImpl roomService;
+    private final AuthUserServiceImpl authUserService;
 
-    public ComplexServiceImpl(ComplexRepository repository, ComplexMapper mapper, BuildingServiceImpl buildingService) {
+    public ComplexServiceImpl(ComplexRepository repository, ComplexMapper mapper, ItemServiceImpl itemService, @Lazy RoomServiceImpl roomService, @Lazy AuthUserServiceImpl authUserService) {
         super(repository, mapper);
-        this.buildingService = buildingService;
+        this.itemService = itemService;
+        this.roomService = roomService;
+        this.authUserService = authUserService;
     }
 
     @Override
     public Long complexCreate(ComplexCreateDTO createDTO) {
         Complex complex = mapper.fromCreateDTO(createDTO);
+        if (Objects.nonNull(createDTO.getAuthUserId())) {
+            AuthUser authUser = authUserService.getAuthUserById(createDTO.getAuthUserId());
+            complex.setAuthUser(authUser);
+        }
+        Room room = roomService.getRoomById(createDTO.getRoomId());
+        complex.setRoom(room);
         Complex saved = repository.save(complex);
         return saved.getId();
     }
@@ -55,7 +69,15 @@ public class ComplexServiceImpl  extends AbstractService<ComplexRepository, Comp
             throw new NotFoundException("Complex Not found with id : " + id);
         Complex complex = optionalComplex.get();
         ComplexDetailDTO detailsDTO = mapper.toDetailsDTO(complex);
+        detailsDTO.setItems(itemService.getItemsByComplexId(id));
         return detailsDTO;
+    }
+
+    public Complex getComplexById(Long id) {
+        Optional<Complex> optionalComplex = repository.findById(id);
+        if (optionalComplex.isPresent())
+            return optionalComplex.get();
+        throw new NotFoundException("Complex not found with id " + id);
     }
 
     @Override
@@ -74,7 +96,7 @@ public class ComplexServiceImpl  extends AbstractService<ComplexRepository, Comp
     }
 
     @Override
-    public Long complexUpdate(ComplexDTO updateDTO) {
+    public Long complexUpdate(ComplexUpdateDTO updateDTO) {
         Long id = updateDTO.getId();
         Optional<Complex> optionalComplex = repository.findById(id);
         if (optionalComplex.isEmpty())
@@ -82,5 +104,28 @@ public class ComplexServiceImpl  extends AbstractService<ComplexRepository, Comp
         Complex complex = mapper.fromUpdateDTO(updateDTO, optionalComplex.get());
         repository.save(complex);
         return id;
+    }
+
+    @Override
+    public Long complexBindToUser(Long complexId, Long userId) {
+        this.getComplexById(complexId);
+        authUserService.getAuthUserById(userId);
+        repository.bindComplexToUser(complexId, userId);
+        return complexId;
+    }
+
+    @Override
+    public Long complexUnBindToUser(Long complexId) {
+        this.getComplexById(complexId);
+        repository.bindComplexToUser(complexId, null);
+        return complexId;
+    }
+
+    public List<ComplexDTO> getByAuthUserId(Long userId) {
+        return mapper.toDTO(repository.findAllByAuthUser_Id(userId));
+    }
+
+    public List<ComplexDTO> getByRoomId(Long roomId) {
+        return mapper.toDTO(repository.findAllByRoom_Id(roomId));
     }
 }

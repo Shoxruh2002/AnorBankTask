@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.sh.dto.GenericDTO;
-import uz.sh.dto.building.BuildingDetailDTO;
+import uz.sh.dto.building.BuildingDTO;
 
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -20,12 +20,10 @@ import java.util.List;
 @NoArgsConstructor
 public class OrganizationDetailDTO extends GenericDTO {
 
-    @Size(min = 10, max = 50)
     private String name;
 
-    @Size(max = 255)
     private String address;
 
-    private List<BuildingDetailDTO> buildings;
+    private List<BuildingDTO> buildings;
 
 }

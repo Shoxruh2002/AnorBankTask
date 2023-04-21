@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import uz.sh.dto.complex.ComplexCreateDTO;
 import uz.sh.dto.complex.ComplexDTO;
 import uz.sh.dto.complex.ComplexDetailDTO;
+import uz.sh.dto.complex.ComplexUpdateDTO;
 import uz.sh.entity.Complex;
 
 import java.util.List;
@@ -26,6 +27,6 @@ public interface ComplexMapper extends BaseMapper {
 
     List<ComplexDTO> toDTO(List<Complex> complexes);
 
-    Complex fromUpdateDTO(ComplexDTO updateDTO, @MappingTarget Complex complex);
+    Complex fromUpdateDTO(ComplexUpdateDTO updateDTO, @MappingTarget Complex complex);
 
 }

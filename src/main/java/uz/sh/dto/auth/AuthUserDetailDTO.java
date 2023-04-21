@@ -4,20 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.sh.dto.GenericDTO;
+import uz.sh.dto.complex.ComplexDTO;
+import uz.sh.entity.Organization;
 
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
- * Author: Shoxruh Bekpulatov
- * Time: 4/20/23 11:04 AM
- **/
+ * @author Shoxruh Bekpulatov
+ * Time : 21/04/23
+ */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthUserUpdateDTO extends GenericDTO {
+public class AuthUserDetailDTO {
 
     private String fullName;
 
@@ -26,4 +26,7 @@ public class AuthUserUpdateDTO extends GenericDTO {
     private String position;
 
     private Integer age;
+
+    private List<ComplexDTO> complexes;
+
 }

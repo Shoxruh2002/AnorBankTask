@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.sh.dto.GenericDTO;
+import uz.sh.dto.floor.FloorDTO;
+import uz.sh.entity.Floor;
 
 /**
  * Author: Shoxruh Bekpulatov
@@ -13,6 +15,11 @@ import uz.sh.dto.GenericDTO;
 @Getter
 @Setter
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 public class RoomDTO extends GenericDTO {
+
+    private String roomName;
+
+    private String roomNumber;
+
 }

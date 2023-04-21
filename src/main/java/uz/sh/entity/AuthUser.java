@@ -32,7 +32,4 @@ public class AuthUser extends Auditable {
 
     private Integer age;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Organization organization;
-
 }

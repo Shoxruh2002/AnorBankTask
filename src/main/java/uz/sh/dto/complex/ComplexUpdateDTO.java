@@ -4,17 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.sh.dto.BaseDTO;
+import uz.sh.dto.GenericDTO;
 
 /**
- * Author: Shoxruh Bekpulatov
- * Time: 4/20/23 5:38 PM
- **/
+ * @author Shoxruh Bekpulatov
+ * Time : 21/04/23
+ */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ComplexCreateDTO implements BaseDTO {
+public class ComplexUpdateDTO extends GenericDTO {
 
     private String complexName;
 

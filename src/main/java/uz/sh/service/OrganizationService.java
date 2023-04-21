@@ -13,7 +13,7 @@ import java.util.List;
  * Author: Shoxruh Bekpulatov
  * Time: 4/20/23 9:30 AM
  **/
-@JsonRpcService("/api/v1/anor/task")
+@JsonRpcService("/api/v1/anor/task/organization")
 public interface OrganizationService {
 
     @JsonRpcMethod(value = "organization.create")
@@ -39,7 +39,7 @@ public interface OrganizationService {
             @JsonRpcParam(value = "id") Long id
     );
 
-    @JsonRpcMethod("organization.delete")
+    @JsonRpcMethod("organization.update")
     Long organizationUpdate(
             @JsonRpcParam(value = "body") OrganizationDTO updateDTO
     );

@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.sh.dto.GenericDTO;
-import uz.sh.dto.room.RoomDetailDTO;
+import uz.sh.dto.building.BuildingDTO;
+import uz.sh.dto.room.RoomDTO;
+import uz.sh.entity.Building;
 
 import java.util.List;
 
@@ -21,7 +23,9 @@ public class FloorDetailDTO extends GenericDTO {
 
     private Integer floorNumber;
 
-    private boolean isDown;
+    private Boolean isDown;
 
-    private List<RoomDetailDTO> rooms;
+    private BuildingDTO building;
+
+    private List<RoomDTO> rooms;
 }

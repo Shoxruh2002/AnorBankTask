@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.sh.dto.GenericDTO;
+import uz.sh.dto.building.BuildingDTO;
+import uz.sh.entity.Building;
 
 /**
  * Author: Shoxruh Bekpulatov
@@ -18,5 +20,6 @@ public class FloorDTO extends GenericDTO {
 
     private Integer floorNumber;
 
-    private boolean isDown;
+    private Boolean isDown;
+
 }

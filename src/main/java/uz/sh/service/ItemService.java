@@ -6,6 +6,7 @@ import com.googlecode.jsonrpc4j.JsonRpcService;
 import uz.sh.dto.item.ItemCreateDTO;
 import uz.sh.dto.item.ItemDTO;
 import uz.sh.dto.item.ItemDetailDTO;
+import uz.sh.dto.item.ItemUpdateDTO;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * Author: Shoxruh Bekpulatov
  * Time: 4/20/23 9:31 AM
  **/
-@JsonRpcService("/api/v1/anor/task")
+@JsonRpcService("/api/v1/anor/task/item")
 public interface ItemService {
 
     @JsonRpcMethod(value = "item.create")
@@ -27,7 +28,7 @@ public interface ItemService {
     );
 
     @JsonRpcMethod(value = "item.get.detail.by.id")
-    ItemDetailDTO itemDetailGetById(
+    ItemDetailDTO itemGetDetailById(
             @JsonRpcParam(value = "id") Long id
     );
 
@@ -39,9 +40,20 @@ public interface ItemService {
             @JsonRpcParam(value = "id") Long id
     );
 
-    @JsonRpcMethod("item.delete")
+    @JsonRpcMethod("item.update")
     Long itemUpdate(
-            @JsonRpcParam(value = "body") ItemDTO updateDTO
+            @JsonRpcParam(value = "body") ItemUpdateDTO updateDTO
+    );
+
+    @JsonRpcMethod("item.bind.to.complex")
+    Long itemBindToComplex(
+            @JsonRpcParam(value = "complexId") Long complexId,
+            @JsonRpcParam(value = "itemId") Long itemId
+    );
+
+    @JsonRpcMethod("item.unbind.to.complex")
+    Long itemBindToComplex(
+            @JsonRpcParam(value = "itemId") Long itemId
     );
 
 }

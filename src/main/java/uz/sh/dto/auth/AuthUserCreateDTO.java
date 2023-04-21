@@ -19,17 +19,11 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class AuthUserCreateDTO implements BaseDTO {
 
-    @Size(max = 100)
     private String fullName;
 
-    @Size(min = 7, max = 15)
     private String phoneNumber;
 
-    @Size(max = 40)
     private String position;
 
-    @Positive
     private Integer age;
-
-    private Long organizationId;
 }

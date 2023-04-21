@@ -20,9 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 public class OrganizationDTO extends GenericDTO  {
 
-    @Size(min = 10, max = 50)
     private String name;
 
-    @Size(max = 255)
     private String address;
 }

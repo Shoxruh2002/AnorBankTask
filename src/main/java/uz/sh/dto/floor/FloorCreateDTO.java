@@ -18,7 +18,7 @@ public class FloorCreateDTO implements BaseDTO {
 
     private Integer floorNumber;
 
-    private boolean isDown;
+    private Boolean isDown;
 
     private Long buildingId;
 

@@ -1,7 +1,9 @@
 package uz.sh.service.impl;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import uz.sh.dto.building.BuildingDTO;
 import uz.sh.dto.organization.OrganizationCreateDTO;
 import uz.sh.dto.organization.OrganizationDTO;
 import uz.sh.dto.organization.OrganizationDetailDTO;
@@ -26,7 +28,7 @@ public class OrganizationServiceImpl extends AbstractService<OrganizationReposit
 
     private final BuildingServiceImpl buildingService;
 
-    public OrganizationServiceImpl(OrganizationRepository repository, OrganizationMapper mapper, BuildingServiceImpl buildingService) {
+    public OrganizationServiceImpl(OrganizationRepository repository, OrganizationMapper mapper,@Lazy BuildingServiceImpl buildingService) {
         super(repository, mapper);
         this.buildingService = buildingService;
     }
@@ -47,6 +49,13 @@ public class OrganizationServiceImpl extends AbstractService<OrganizationReposit
         return mapper.toDTO(organization);
     }
 
+    public Organization getOrganizationById(Long id) {
+        Optional<Organization> optionalOrganization = repository.findById(id);
+        if (optionalOrganization.isPresent())
+            return optionalOrganization.get();
+        throw new NotFoundException("Organization not found with id " + id);
+    }
+
     @Override
     public OrganizationDetailDTO organizationDetailGetById(Long id) {
         Optional<Organization> optionalOrganization = repository.findById(id);
@@ -54,6 +63,8 @@ public class OrganizationServiceImpl extends AbstractService<OrganizationReposit
             throw new NotFoundException("Organization Not found with id : " + id);
         Organization organization = optionalOrganization.get();
         OrganizationDetailDTO detailsDTO = mapper.toDetailsDTO(organization);
+        List<BuildingDTO> buildingDTOS = buildingService.getBuildingDTOSByOrganizationId(id);
+        detailsDTO.setBuildings(buildingDTOS);
         return detailsDTO;
     }
 

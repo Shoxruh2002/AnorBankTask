@@ -1,14 +1,13 @@
 package uz.sh.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Author: Shoxruh Bekpulatov
@@ -23,8 +22,13 @@ public class Floor extends Auditable {
 
     private Integer floorNumber;
 
-    private boolean isDown;
+    private Boolean isDown;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Building building;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "floor")
+    private List<Room> rooms;
+
 }

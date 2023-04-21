@@ -1,14 +1,13 @@
 package uz.sh.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Author: Shoxruh Bekpulatov
@@ -27,6 +26,14 @@ public class Room extends Auditable {
     @Column(length = 15)
     private String roomNumber;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Floor floor;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
+    private List<Complex> complexes;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
+    private List<Item> items;
 }

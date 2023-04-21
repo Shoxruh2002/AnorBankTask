@@ -6,6 +6,7 @@ import com.googlecode.jsonrpc4j.JsonRpcService;
 import uz.sh.dto.complex.ComplexCreateDTO;
 import uz.sh.dto.complex.ComplexDTO;
 import uz.sh.dto.complex.ComplexDetailDTO;
+import uz.sh.dto.complex.ComplexUpdateDTO;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * Author: Shoxruh Bekpulatov
  * Time: 4/20/23 9:31 AM
  **/
-@JsonRpcService("/api/v1/anor/task")
+@JsonRpcService("/api/v1/anor/task/complex")
 public interface ComplexService {
 
     @JsonRpcMethod(value = "complex.create")
@@ -39,9 +40,20 @@ public interface ComplexService {
             @JsonRpcParam(value = "id") Long id
     );
 
-    @JsonRpcMethod("complex.delete")
+    @JsonRpcMethod("complex.update")
     Long complexUpdate(
-            @JsonRpcParam(value = "body") ComplexDTO updateDTO
+            @JsonRpcParam(value = "body") ComplexUpdateDTO updateDTO
+    );
+
+    @JsonRpcMethod("complex.bind.to.user")
+    Long complexBindToUser(
+            @JsonRpcParam(value = "complexId") Long  complexId,
+            @JsonRpcParam(value = "userId") Long  userId
+    );
+
+    @JsonRpcMethod("complex.unbind.to.user")
+    Long complexUnBindToUser(
+            @JsonRpcParam(value = "complexId") Long  complexId
     );
 
 }

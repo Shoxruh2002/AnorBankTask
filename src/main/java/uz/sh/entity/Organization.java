@@ -1,12 +1,16 @@
 package uz.sh.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 /**
  * Author: Shoxruh Bekpulatov
@@ -23,5 +27,9 @@ public class Organization extends Auditable {
     private String name;
 
     private String address;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
+    private List<Building> buildings;
 
 }

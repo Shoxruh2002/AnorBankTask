@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.sh.dto.GenericDTO;
+import uz.sh.dto.auth.AuthUserDTO;
+import uz.sh.dto.room.RoomDTO;
+import uz.sh.entity.AuthUser;
+import uz.sh.entity.Room;
 
 /**
  * Author: Shoxruh Bekpulatov
@@ -13,6 +17,13 @@ import uz.sh.dto.GenericDTO;
 @Setter
 @Getter
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 public class ComplexDTO extends GenericDTO {
+
+    private String complexName;
+
+    private RoomDTO room;
+
+    private AuthUserDTO authUser;
+
 }

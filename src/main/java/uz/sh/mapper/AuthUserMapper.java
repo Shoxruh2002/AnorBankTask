@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 import uz.sh.dto.auth.AuthUserCreateDTO;
 import uz.sh.dto.auth.AuthUserDTO;
+import uz.sh.dto.auth.AuthUserDetailDTO;
 import uz.sh.entity.AuthUser;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public interface AuthUserMapper extends BaseMapper {
     AuthUser fromCreateDTO(AuthUserCreateDTO createDTO);
 
     AuthUserDTO toDTO(AuthUser authUser);
+
+    AuthUserDetailDTO toDetailDTO(AuthUser authUser);
 
     List<AuthUserDTO> toDTO(List<AuthUser> authUser);
 }

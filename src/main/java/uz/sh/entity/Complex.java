@@ -1,14 +1,13 @@
 package uz.sh.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Author: Shoxruh Bekpulatov
@@ -23,12 +22,14 @@ public class Complex extends Auditable {
 
     private String complexName;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Room building;
+    @ManyToOne
+    private Room room;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private AuthUser authUser;
 
-    private Long userId;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "complex")
+    private List<Item> items;
 
 }

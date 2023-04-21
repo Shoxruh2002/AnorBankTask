@@ -4,6 +4,8 @@ import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
 import org.springframework.stereotype.Service;
 import uz.sh.dto.auth.AuthUserCreateDTO;
 import uz.sh.dto.auth.AuthUserDTO;
+import uz.sh.dto.auth.AuthUserDetailDTO;
+import uz.sh.dto.complex.ComplexDTO;
 import uz.sh.entity.AuthUser;
 import uz.sh.exceptions.NotFoundException;
 import uz.sh.mapper.AuthUserMapper;
@@ -22,11 +24,11 @@ import java.util.Optional;
 @Service
 public class AuthUserServiceImpl extends AbstractService<AuthUserRepository, AuthUserMapper> implements AuthUserService {
 
-    private final OrganizationServiceImpl organizationService;
+    private final ComplexServiceImpl complexService;
 
-    public AuthUserServiceImpl(AuthUserRepository repository, AuthUserMapper mapper, OrganizationServiceImpl organizationService) {
+    public AuthUserServiceImpl(AuthUserRepository repository, AuthUserMapper mapper, ComplexServiceImpl complexService) {
         super(repository, mapper);
-        this.organizationService = organizationService;
+        this.complexService = complexService;
     }
 
     @Override
@@ -38,15 +40,29 @@ public class AuthUserServiceImpl extends AbstractService<AuthUserRepository, Aut
 
     @Override
     public AuthUserDTO userGetById(Long id) {
-        Optional<AuthUser> authUserOptional = repository.findById(id);
-        if (authUserOptional.isPresent())
-            return mapper.toDTO(authUserOptional.get());
-        throw new NotFoundException(404, "Auth User not found with id : " + id);
+        AuthUser authUser = this.getAuthUserById(id);
+        return mapper.toDTO(authUser);
+    }
+
+    @Override
+    public AuthUserDetailDTO userDetailGetById(Long id) {
+        AuthUser authUser = this.getAuthUserById(id);
+        AuthUserDetailDTO detailDTO = mapper.toDetailDTO(authUser);
+        List<ComplexDTO> complexDTOList = complexService.getByAuthUserId(id);
+        detailDTO.setComplexes(complexDTOList);
+        return detailDTO;
     }
 
     @Override
     public List<AuthUserDTO> userGetAll() {
         List<AuthUser> userList = repository.findAll();
         return mapper.toDTO(userList);
+    }
+
+    public AuthUser getAuthUserById(Long id) {
+        Optional<AuthUser> authUserOptional = repository.findById(id);
+        if (authUserOptional.isPresent())
+            return authUserOptional.get();
+        throw new NotFoundException(404, "Auth User not found with id : " + id);
     }
 }

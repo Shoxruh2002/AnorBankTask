@@ -5,6 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.sh.dto.GenericDTO;
+import uz.sh.dto.complex.ComplexDTO;
+import uz.sh.dto.floor.FloorDTO;
+import uz.sh.dto.item.ItemDTO;
+import uz.sh.dto.item.ItemDetailDTO;
+
+import java.util.List;
 
 /**
  * Author: Shoxruh Bekpulatov
@@ -13,6 +19,16 @@ import uz.sh.dto.GenericDTO;
 @Getter
 @Setter
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 public class RoomDetailDTO extends GenericDTO {
+
+    private String roomName;
+
+    private String roomNumber;
+
+    private FloorDTO floor;
+
+    private List<ComplexDTO> complexes;
+
+    private List<ItemDTO> items;
 }

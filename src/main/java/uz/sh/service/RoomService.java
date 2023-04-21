@@ -6,6 +6,7 @@ import com.googlecode.jsonrpc4j.JsonRpcService;
 import uz.sh.dto.room.RoomCreateDTO;
 import uz.sh.dto.room.RoomDTO;
 import uz.sh.dto.room.RoomDetailDTO;
+import uz.sh.dto.room.RoomUpdateDTO;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * Author: Shoxruh Bekpulatov
  * Time: 4/20/23 9:30 AM
  **/
-@JsonRpcService("/api/v1/anor/task")
+@JsonRpcService("/api/v1/anor/task/room")
 public interface RoomService {
 
     @JsonRpcMethod(value = "room.create")
@@ -39,9 +40,9 @@ public interface RoomService {
             @JsonRpcParam(value = "id") Long id
     );
 
-    @JsonRpcMethod("room.delete")
+    @JsonRpcMethod("room.update")
     Long roomUpdate(
-            @JsonRpcParam(value = "body") RoomDTO updateDTO
+            @JsonRpcParam(value = "body") RoomUpdateDTO updateDTO
     );
 
 }

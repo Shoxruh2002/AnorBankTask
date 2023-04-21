@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
@@ -30,10 +30,10 @@ public class Item extends Auditable {
 
     private BigDecimal price;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Complex complex;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Room room;
 
 }

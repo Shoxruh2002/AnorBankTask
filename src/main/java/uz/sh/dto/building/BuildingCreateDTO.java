@@ -18,7 +18,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class BuildingCreateDTO implements BaseDTO {
 
-    @Size(min = 10, max = 50)
     private String name;
 
     private Long organizationId;

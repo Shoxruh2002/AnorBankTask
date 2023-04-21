@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import uz.sh.dto.room.RoomCreateDTO;
 import uz.sh.dto.room.RoomDTO;
 import uz.sh.dto.room.RoomDetailDTO;
+import uz.sh.dto.room.RoomUpdateDTO;
 import uz.sh.entity.Room;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  **/
 @Component
 @Mapper(componentModel = "spring")
-public interface RoomMapper extends BaseMapper{
+public interface RoomMapper extends BaseMapper {
 
     Room fromCreateDTO(RoomCreateDTO createDTO);
 
@@ -26,5 +27,5 @@ public interface RoomMapper extends BaseMapper{
 
     List<RoomDTO> toDTO(List<Room> rooms);
 
-    Room fromUpdateDTO(RoomDTO updateDTO, @MappingTarget Room room);
+    Room fromUpdateDTO(RoomUpdateDTO updateDTO, @MappingTarget Room room);
 }
