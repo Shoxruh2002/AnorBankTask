@@ -1,6 +1,7 @@
 package uz.sh.service.impl;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import uz.sh.contraints.ConstMessages;
@@ -18,12 +19,15 @@ import uz.sh.service.AuthUserService;
 import java.util.List;
 import java.util.Optional;
 
+import static uz.sh.utils.AppUtils.toJson;
+
 /**
  * Author: Shoxruh Bekpulatov
  * Time: 4/20/23 9:31 AM
  **/
 @AutoJsonRpcServiceImpl
 @Service
+@Slf4j
 public class AuthUserServiceImpl extends AbstractService<AuthUserRepository, AuthUserMapper> implements AuthUserService {
 
     private final ComplexServiceImpl complexService;
@@ -43,6 +47,7 @@ public class AuthUserServiceImpl extends AbstractService<AuthUserRepository, Aut
     public Long createAuthUser(AuthUserCreateDTO createDTO) {
         AuthUser authUser = mapper.fromCreateDTO(createDTO);
         AuthUser saved = repository.save(authUser);
+        log.info("AuthUser created with : {} ", toJson(saved));
         return saved.getId();
     }
 

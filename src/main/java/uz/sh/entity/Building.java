@@ -25,6 +25,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Building extends Auditable {
 
+    @Column(length = 80)
     private String name;
 
     @ManyToOne

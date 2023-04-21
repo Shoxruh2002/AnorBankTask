@@ -1,6 +1,7 @@
 package uz.sh.service.impl;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -22,12 +23,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static uz.sh.utils.AppUtils.toJson;
+
 /**
  * Author: Shoxruh Bekpulatov
  * Time: 4/20/23 9:33 AM
  **/
 @AutoJsonRpcServiceImpl
 @Service
+@Slf4j
 public class ComplexServiceImpl extends AbstractService<ComplexRepository, ComplexMapper> implements ComplexService {
 
     private final ItemServiceImpl itemService;
@@ -58,6 +62,7 @@ public class ComplexServiceImpl extends AbstractService<ComplexRepository, Compl
         Room room = roomService.getRoomById(createDTO.getRoomId());
         complex.setRoom(room);
         Complex saved = repository.save(complex);
+        log.info("Complex created with : {}", toJson(saved));
         return saved.getId();
     }
 
@@ -119,6 +124,7 @@ public class ComplexServiceImpl extends AbstractService<ComplexRepository, Compl
     public Long deleteComplex(Long id) {
         Complex dbComplex = this.getComplexById(id);
         repository.delete(dbComplex);
+        log.info("Complex deleted with : {}", toJson(dbComplex));
         return dbComplex.getId();
     }
 
@@ -141,6 +147,7 @@ public class ComplexServiceImpl extends AbstractService<ComplexRepository, Compl
         this.getComplexById(complexId);
         authUserService.getAuthUserById(userId);
         repository.bindComplexToUser(complexId, userId);
+        log.info("Complex bind to user complexId : {}, UserId : {}", complexId, userId);
         return complexId;
     }
 
@@ -148,6 +155,8 @@ public class ComplexServiceImpl extends AbstractService<ComplexRepository, Compl
     public Long unbindComplexToUser(Long complexId) {
         this.getComplexById(complexId);
         repository.bindComplexToUser(complexId, null);
+        log.info("Complex unbind to User ComplexId : {}", complexId);
+
         return complexId;
     }
 

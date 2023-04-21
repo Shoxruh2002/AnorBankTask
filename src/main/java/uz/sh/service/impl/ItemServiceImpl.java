@@ -1,6 +1,7 @@
 package uz.sh.service.impl;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static uz.sh.utils.AppUtils.toJson;
+
 /**
  * Author: Shoxruh Bekpulatov
  * Time: 4/20/23 9:33 AM
  **/
+@Slf4j
 @AutoJsonRpcServiceImpl
 @Service
 public class ItemServiceImpl extends AbstractService<ItemRepository, ItemMapper> implements ItemService {
@@ -53,6 +57,7 @@ public class ItemServiceImpl extends AbstractService<ItemRepository, ItemMapper>
         if (Objects.nonNull(createDTO.getComplexId()))
             item.setComplex(complexService.getComplexById(createDTO.getComplexId()));
         Item saved = repository.save(item);
+        log.info("Item created with : {}", toJson(saved));
         return saved.getId();
     }
 
@@ -113,6 +118,7 @@ public class ItemServiceImpl extends AbstractService<ItemRepository, ItemMapper>
     public Long deleteItem(Long id) {
         Item dbItem = this.getItemById(id);
         repository.delete(dbItem);
+        log.info("Item deleted with : {}", toJson(dbItem));
         return dbItem.getId();
     }
 
@@ -132,11 +138,11 @@ public class ItemServiceImpl extends AbstractService<ItemRepository, ItemMapper>
 
 
     /**
-     *  binds item to complex and item will be dependent on complex and room
+     * binds item to complex and item will be dependent on complex and room
+     *
      * @param itemId ->  item id to be bind
      * @return id of item bind
      */
-
 
 
     @Override
@@ -144,11 +150,13 @@ public class ItemServiceImpl extends AbstractService<ItemRepository, ItemMapper>
         complexService.getComplexById(complexId);
         this.getItemById(itemId);
         repository.itemBindToComplex(itemId, complexId);
+        log.info("Item bind to complex itemId : {}, ComplexId : {}", itemId, complexId);
         return itemId;
     }
 
     /**
-     *  unbinds item from complex and item will be dependent on room only
+     * unbinds item from complex and item will be dependent on room only
+     *
      * @param itemId ->  item id to be unbind
      * @return id of item unbind
      */
@@ -157,6 +165,8 @@ public class ItemServiceImpl extends AbstractService<ItemRepository, ItemMapper>
     public Long unbindItemToComplex(Long itemId) {
         this.getItemById(itemId);
         repository.itemBindToComplex(itemId, null);
+        log.info("Item bind to complex itemId : {}", itemId);
+
         return itemId;
     }
 

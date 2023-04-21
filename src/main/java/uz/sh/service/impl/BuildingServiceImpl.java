@@ -1,6 +1,7 @@
 package uz.sh.service.impl;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -20,12 +21,15 @@ import uz.sh.service.BuildingService;
 import java.util.List;
 import java.util.Optional;
 
+import static uz.sh.utils.AppUtils.toJson;
+
 /**
  * Author: Shoxruh Bekpulatov
  * Time: 4/20/23 9:32 AM
  **/
 @AutoJsonRpcServiceImpl
 @Service
+@Slf4j
 public class BuildingServiceImpl extends AbstractService<BuildingRepository, BuildingMapper> implements BuildingService {
 
     private final FloorServiceImpl floorService;
@@ -50,6 +54,7 @@ public class BuildingServiceImpl extends AbstractService<BuildingRepository, Bui
         Organization organization = organizationService.getOrganizationById(createDTO.getOrganizationId());
         building.setOrganization(organization);
         Building saved = repository.save(building);
+        log.info("Building created with : {} ", toJson(saved));
         return saved.getId();
     }
 
@@ -109,6 +114,7 @@ public class BuildingServiceImpl extends AbstractService<BuildingRepository, Bui
     public Long deleteBuilding(Long id) {
         Building dbBuilding = this.getBuildingById(id);
         repository.delete(dbBuilding);
+        log.info("Building deleted with : {}", toJson(dbBuilding));
         return dbBuilding.getId();
     }
 

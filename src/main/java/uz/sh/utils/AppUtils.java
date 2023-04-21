@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uz.sh.contraints.ConstMessages;
 
@@ -28,6 +30,7 @@ import java.util.UUID;
  * Time: 10/25/22 4:46 PM
  **/
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AppUtils {
 
     private static final ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
@@ -39,14 +42,15 @@ public class AppUtils {
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
-    public static String objectToJsonString( Object object ) {
+    public static String objectToJsonString(Object object) {
         try {
             return objectMapper.writeValueAsString(object);
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             log.error("Error while converting object as json string; {}", e.getMessage());
             return null;
         }
     }
+
     public static Integer randomInteger() {
         try {
             Random random = SecureRandom.getInstanceStrong();  // SecureRandom is preferred to Random

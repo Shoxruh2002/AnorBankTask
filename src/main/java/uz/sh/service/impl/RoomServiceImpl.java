@@ -1,6 +1,7 @@
 package uz.sh.service.impl;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import uz.sh.contraints.ConstMessages;
@@ -21,10 +22,13 @@ import uz.sh.service.RoomService;
 import java.util.List;
 import java.util.Optional;
 
+import static uz.sh.utils.AppUtils.toJson;
+
 /**
  * Author: Shoxruh Bekpulatov
  * Time: 4/20/23 9:32 AM
  **/
+@Slf4j
 @AutoJsonRpcServiceImpl
 @Service
 public class RoomServiceImpl extends AbstractService<RoomRepository, RoomMapper> implements RoomService {
@@ -53,6 +57,7 @@ public class RoomServiceImpl extends AbstractService<RoomRepository, RoomMapper>
         Floor floor = floorService.getFloorById(createDTO.getFloorId());
         room.setFloor(floor);
         Room saved = repository.save(room);
+        log.info("Room created with : {}", toJson(saved));
         return saved.getId();
     }
 
@@ -110,6 +115,7 @@ public class RoomServiceImpl extends AbstractService<RoomRepository, RoomMapper>
     public Long deleteRoom(Long id) {
         Room dbRoom = this.getRoomById(id);
         repository.delete(dbRoom);
+        log.info("Room deleted with : {}", toJson(dbRoom));
         return dbRoom.getId();
     }
 

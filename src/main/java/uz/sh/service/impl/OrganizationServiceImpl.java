@@ -1,6 +1,7 @@
 package uz.sh.service.impl;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,13 @@ import uz.sh.service.OrganizationService;
 import java.util.List;
 import java.util.Optional;
 
+import static uz.sh.utils.AppUtils.toJson;
+
 /**
  * Author: Shoxruh Bekpulatov
  * Time: 4/20/23 9:33 AM
  **/
+@Slf4j
 @AutoJsonRpcServiceImpl
 @Service
 public class OrganizationServiceImpl extends AbstractService<OrganizationRepository, OrganizationMapper> implements OrganizationService {
@@ -45,6 +49,7 @@ public class OrganizationServiceImpl extends AbstractService<OrganizationReposit
     public Long createOrganization(OrganizationCreateDTO createDTO) {
         Organization organization = mapper.fromCreateDTO(createDTO);
         Organization saved = repository.save(organization);
+        log.info("Organization created with : {}", toJson(saved));
         return saved.getId();
     }
 
@@ -101,6 +106,7 @@ public class OrganizationServiceImpl extends AbstractService<OrganizationReposit
     public Long deleteOrganization(Long id) {
         Organization dbOrganization = this.getOrganizationById(id);
         repository.delete(dbOrganization);
+        log.info("Organization deleted with : {}", toJson(dbOrganization));
         return dbOrganization.getId();
     }
 
