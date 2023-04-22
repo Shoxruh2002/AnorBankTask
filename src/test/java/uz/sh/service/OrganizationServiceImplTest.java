@@ -16,7 +16,7 @@ import uz.sh.mapper.OrganizationMapper;
 import uz.sh.repository.OrganizationRepository;
 import uz.sh.service.impl.BuildingServiceImpl;
 import uz.sh.service.impl.OrganizationServiceImpl;
-import uz.sh.utils.OrganizationServiceUtils;
+import uz.sh.utils.TestingUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +45,9 @@ class OrganizationServiceImplTest {
     @Test
     void createOrganizationTest() {
         BDDMockito.when(organizationMapper.fromCreateDTO(ArgumentMatchers.any()))
-                .thenReturn(OrganizationServiceUtils.getOrganizationEntity());
+                .thenReturn(TestingUtils.getOrganizationEntity());
         BDDMockito.when(organizationRepository.save(ArgumentMatchers.any()))
-                .thenReturn(OrganizationServiceUtils.getOrganizationEntity());
+                .thenReturn(TestingUtils.getOrganizationEntity());
 
         Long organizationId = organizationService.createOrganization(new OrganizationCreateDTO());
         Assertions.assertEquals(1L, organizationId);
@@ -56,54 +56,54 @@ class OrganizationServiceImplTest {
     @Test
     void getOrganizationDTOByIdTest() {
         BDDMockito.when(organizationRepository.findById(ArgumentMatchers.any()))
-                .thenReturn(Optional.of(OrganizationServiceUtils.getOrganizationEntity()));
+                .thenReturn(Optional.of(TestingUtils.getOrganizationEntity()));
         BDDMockito.when(organizationMapper.toDTO(ArgumentMatchers.any(Organization.class)))
-                .thenReturn(OrganizationServiceUtils.getOrganizationDTO());
+                .thenReturn(TestingUtils.getOrganizationDTO());
 
         OrganizationDTO organizationDTO = organizationService.getOrganizationDTOById(1L);
-        Assertions.assertEquals(OrganizationServiceUtils.ORGANIZATION_NAME, organizationDTO.getName());
-        Assertions.assertEquals(OrganizationServiceUtils.ORGANIZATION_ADDRESS, organizationDTO.getAddress());
+        Assertions.assertEquals(TestingUtils.ORGANIZATION_NAME, organizationDTO.getName());
+        Assertions.assertEquals(TestingUtils.ORGANIZATION_ADDRESS, organizationDTO.getAddress());
     }
 
     @Test
     void getOrganizationByIdTest() {
         BDDMockito.when(organizationRepository.findById(ArgumentMatchers.any()))
-                .thenReturn(Optional.of(OrganizationServiceUtils.getOrganizationEntity()));
+                .thenReturn(Optional.of(TestingUtils.getOrganizationEntity()));
 
         Organization organization = organizationService.getOrganizationById(1L);
-        Assertions.assertEquals(OrganizationServiceUtils.ORGANIZATION_NAME, organization.getName());
-        Assertions.assertEquals(OrganizationServiceUtils.ORGANIZATION_ADDRESS, organization.getAddress());
+        Assertions.assertEquals(TestingUtils.ORGANIZATION_NAME, organization.getName());
+        Assertions.assertEquals(TestingUtils.ORGANIZATION_ADDRESS, organization.getAddress());
     }
 
     @Test
     void getOrganizationDetailByIdTest() {
         BDDMockito.when(organizationRepository.findById(ArgumentMatchers.any()))
-                .thenReturn(Optional.of(OrganizationServiceUtils.getOrganizationEntity()));
+                .thenReturn(Optional.of(TestingUtils.getOrganizationEntity()));
         BDDMockito.when(organizationMapper.toDetailsDTO(ArgumentMatchers.any()))
-                .thenReturn(OrganizationServiceUtils.getOrganizationDetailDTO());
+                .thenReturn(TestingUtils.getOrganizationDetailDTO());
         BDDMockito.when(buildingService.getBuildingDTOSByOrganizationId(ArgumentMatchers.any()))
                 .thenReturn(new ArrayList<>());
 
         OrganizationDetailDTO organizationDetails = organizationService.getOrganizationDetailById(1L);
-        Assertions.assertEquals(OrganizationServiceUtils.ORGANIZATION_NAME, organizationDetails.getName());
-        Assertions.assertEquals(OrganizationServiceUtils.ORGANIZATION_ADDRESS, organizationDetails.getAddress());
+        Assertions.assertEquals(TestingUtils.ORGANIZATION_NAME, organizationDetails.getName());
+        Assertions.assertEquals(TestingUtils.ORGANIZATION_ADDRESS, organizationDetails.getAddress());
     }
 
     @Test
     void getAllOrganizationTest() {
         BDDMockito.when(organizationRepository.findAll())
-                .thenReturn(List.of(OrganizationServiceUtils.getOrganizationEntity()));
+                .thenReturn(List.of(TestingUtils.getOrganizationEntity()));
         BDDMockito.when(organizationMapper.toDTO(ArgumentMatchers.anyList()))
-                .thenReturn(List.of(OrganizationServiceUtils.getOrganizationDTO()));
+                .thenReturn(List.of(TestingUtils.getOrganizationDTO()));
 
         List<OrganizationDTO> allOrganization = organizationService.getAllOrganization();
         Assertions.assertEquals(1, allOrganization.size());
-        Assertions.assertEquals(OrganizationServiceUtils.ORGANIZATION_NAME, allOrganization.get(0).getName());
+        Assertions.assertEquals(TestingUtils.ORGANIZATION_NAME, allOrganization.get(0).getName());
     }
 
     @Test
     void deleteOrganizationTest() {
-        Organization organization = OrganizationServiceUtils.getOrganizationEntity();
+        Organization organization = TestingUtils.getOrganizationEntity();
         BDDMockito.when(organizationRepository.findById(ArgumentMatchers.any()))
                 .thenReturn(Optional.of(organization));
         BDDMockito.doNothing().when(organizationRepository).delete(organization);
@@ -114,7 +114,7 @@ class OrganizationServiceImplTest {
 
     @Test
     void updateOrganizationTest() {
-        Organization organization = OrganizationServiceUtils.getOrganizationEntity();
+        Organization organization = TestingUtils.getOrganizationEntity();
         BDDMockito.when(organizationRepository.findById(ArgumentMatchers.any()))
                 .thenReturn(Optional.of(organization));
         BDDMockito.when(organizationMapper.fromUpdateDTO(ArgumentMatchers.any(), ArgumentMatchers.any()))
@@ -122,7 +122,7 @@ class OrganizationServiceImplTest {
         BDDMockito.when(organizationRepository.save(ArgumentMatchers.any()))
                 .thenReturn(organization);
 
-        OrganizationDTO organizationDTO = OrganizationServiceUtils.getOrganizationDTO();
+        OrganizationDTO organizationDTO = TestingUtils.getOrganizationDTO();
         organizationDTO.setId(1L);
         Long id = organizationService.updateOrganization(organizationDTO);
         Assertions.assertEquals(1L, id);
