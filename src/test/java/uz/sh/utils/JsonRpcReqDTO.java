@@ -1,4 +1,4 @@
-package uz.sh.helper;
+package uz.sh.utils;
 
 import lombok.Data;
 
