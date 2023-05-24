@@ -28,7 +28,7 @@ public class Floor extends Auditable {
 
     private Boolean isDown;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Building building;
 
     @JsonIgnore

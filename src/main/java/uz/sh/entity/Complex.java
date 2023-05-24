@@ -28,7 +28,7 @@ public class Complex extends Auditable {
     @Column(length = 80)
     private String complexName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Room room;
 
     @OneToOne

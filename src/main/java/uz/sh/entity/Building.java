@@ -28,11 +28,11 @@ public class Building extends Auditable {
     @Column(length = 80)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Organization organization;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "building")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "building",orphanRemoval = true)
     private List<Floor> floors;
 
 }

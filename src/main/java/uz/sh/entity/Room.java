@@ -31,7 +31,7 @@ public class Room extends Auditable {
     @Column(length = 15)
     private String roomNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Floor floor;
 
     @JsonIgnore
